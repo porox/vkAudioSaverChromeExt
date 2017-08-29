@@ -43,9 +43,10 @@ function renderDownloadButton(arr)
             .getElementsByClassName('audio_row__title');
         url = unpackAudioUrl(arr[audio][2]);
         var a = document.createElement('a');
-        a.href=url;
-        a.title='DOWNLOAD';
-        a.download = arr[audio][4]+'.mp3';
+        a.title = arr[audio][4].trim()+' - '+arr[audio][3].trim()+'.mp3';
+        a.style.opacity = 1;
+        a.download = arr[audio][4].trim()+' - '+arr[audio][3].trim()+'.mp3';
+        a.href = url;
         var linkText = document.createTextNode("  DOWNLOAD");
         a.appendChild(document.createElement('br'));
         a.appendChild(linkText);

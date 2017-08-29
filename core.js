@@ -4,15 +4,17 @@ function getAudiosArray()
     var elements = document.getElementsByClassName("audio_row");
     var arr = [];
     var i = 0;
-    Array.prototype.forEach.call(elements, function(el) {
-        arr.push(el.getAttribute('data-full-id'));
-        i++;
-        if (i == 9){
-            i = 0;
-            getAudiosUrls(arr);
-            arr = [];
+    return Array.prototype.forEach.call(elements, function(el) {
+        if (!el.classList.contains('dowloaded'))
+        {
+            arr.push(el.getAttribute('data-full-id'));
+            i++;
+            if (i == 9){
+                i = 0;
+                getAudiosUrls(arr);
+                arr = [];
+            }
         }
-
     });
 }
 
@@ -33,7 +35,7 @@ function renderDownloadButton(arr)
     var url;
     for (var audio in arr)
     {
-
+        document.getElementsByClassName('_audio_row_'+arr[audio][1]+'_'+arr[audio][0])[0].className += ' dowloaded';
         var element = document.getElementsByClassName('_audio_row_'+arr[audio][1]+'_'+arr[audio][0])[0]
             .getElementsByClassName('audio_row_content')[0]
             .getElementsByClassName('audio_row__inner')[0]
@@ -49,7 +51,6 @@ function renderDownloadButton(arr)
         a.appendChild(linkText);
 
         a.className = 'audio_row__title_inner';
-        //console.log(element);
         element[0].appendChild(a);
 
     }

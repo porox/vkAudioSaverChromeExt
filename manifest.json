@@ -1,0 +1,16 @@
+{
+  "manifest_version": 2,
+  "name": "Vk Audio Saver",
+  "permissions": [ "<all_urls>", "*://*/*", "tabs", "activeTab" ],
+  "version": "1.0",
+  "content_scripts": [ {
+    "css": [ ],
+    "js": ["background.js" ],
+    "matches": [ "*://vk.com/*", "*://*.vk.com/*" ]
+  }],
+  "web_accessible_resources": [
+    "/core.js"
+  ],
+  "default_locale": "ru",
+  "description": "Скачивание аудиофалов с сайта Vk.com"
+}

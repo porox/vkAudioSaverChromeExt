@@ -43,17 +43,33 @@ function renderDownloadButton(arr)
             .getElementsByClassName('audio_row__title');
         url = unpackAudioUrl(arr[audio][2]);
         var a = document.createElement('a');
-        a.href=url;
         a.title='DOWNLOAD';
-        a.download = arr[audio][4]+'.mp3';
         var linkText = document.createTextNode("  DOWNLOAD");
         a.appendChild(document.createElement('br'));
         a.appendChild(linkText);
+        a.setAttribute('onclick', 'getAudioFile("'+url+'","'+arr[audio][4]+' - '+arr[audio][3]+'.mp3'+'")');
 
         a.className = 'audio_row__title_inner';
         element[0].appendChild(a);
 
     }
+}
+function getAudioFile(url,fileName)
+{
+    window.URL = window.URL || window.webkitURL;
+    var xhr = new XMLHttpRequest(),
+        a = document.createElement('a'), file;
+    xhr.open('GET', url, true);
+    xhr.responseType = 'blob';
+    xhr.onload = function () {
+        file = new Blob([xhr.response], { type : 'application/octet-stream' });
+        a.href = window.URL.createObjectURL(file);
+        a.download = fileName;
+        a.click();
+    };
+    xhr.send();
+    return false;
+
 }
 function unpackAudioUrl(t) {
     if (~t.indexOf('audio_api_unavailable')) {

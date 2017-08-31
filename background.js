@@ -10,4 +10,4 @@ script.setAttribute("type", "text/javascript");
 script.innerHTML = data;
 document.head.appendChild(script);
 
-document.body.setAttribute("onLoad", " setInterval(function(){ return getAudiosArray();},200);");
+document.body.setAttribute("onLoad", " setInterval(function(){ return getAudiosArray();},700);");

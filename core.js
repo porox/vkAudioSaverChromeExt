@@ -33,28 +33,42 @@ function getAudiosUrls(arr)
 function renderDownloadButton(arr)
 {
     var url;
+    var el ;
     for (var audio in arr)
     {
-        document.getElementsByClassName('_audio_row_'+arr[audio][1]+'_'+arr[audio][0])[0].className += ' dowloaded';
-        var element = document.getElementsByClassName('_audio_row_'+arr[audio][1]+'_'+arr[audio][0])[0]
-            .getElementsByClassName('audio_row_content')[0]
-            .getElementsByClassName('audio_row__inner')[0]
-            .getElementsByClassName('audio_row__performer_title')[0]
-            .getElementsByClassName('audio_row__title');
-        url = unpackAudioUrl(arr[audio][2]);
-        var a = document.createElement('a');
-        a.title = arr[audio][4].trim()+' - '+arr[audio][3].trim()+'.mp3';
-        a.style.opacity = 1;
-        a.download = arr[audio][4].trim()+' - '+arr[audio][3].trim()+'.mp3';
-        a.href = url;
-        var linkText = document.createTextNode("  DOWNLOAD");
-        a.appendChild(document.createElement('br'));
-        a.appendChild(linkText);
-
-        a.className = 'audio_row__title_inner';
-        element[0].appendChild(a);
-
+        el = document.getElementsByClassName('_audio_row_' + arr[audio][1] + '_' + arr[audio][0])[0];
+        if (!el.classList.contains('dowloaded'))
+        {
+            el.className += ' dowloaded';
+            var element = document.getElementsByClassName('_audio_row_' + arr[audio][1] + '_' + arr[audio][0])[0]
+                .getElementsByClassName('audio_row_content');
+            url = unpackAudioUrl(arr[audio][2]);
+            var name = arr[audio][4] + ' - ' + arr[audio][3] + '.mp3';
+            var div = document.createElement('a');
+            div.style = 'left: 50px; top: 3px; margin-right: 55px; opacity: 1; float: left;    display: block;  position: relative; cursor: pointer; width: 32px; height: 32px; background-image: url(http://icons.iconarchive.com/icons/icojam/blue-bits/32/arrow-up-icon.png)';
+            div.setAttribute('onclick', 'getAudioFile("' + url + '","' + name + '")');
+            div.title = name;
+            div.class = 'vkDownloaderAudio';
+            element[0].insertBefore(div, element[0].firstChild);
+        }
     }
+}
+function getAudioFile(url,fileName)
+{
+    window.URL = window.URL || window.webkitURL;
+    var xhr = new XMLHttpRequest(),
+        a = document.createElement('a'), file;
+    xhr.open('GET', url, true);
+    xhr.responseType = 'blob';
+    xhr.onload = function () {
+        file = new Blob([xhr.response], { type : 'application/octet-stream' });
+        a.href = window.URL.createObjectURL(file);
+        a.download = fileName;
+        a.click();
+    };
+    xhr.send();
+    return false;
+
 }
 function unpackAudioUrl(t) {
     if (~t.indexOf('audio_api_unavailable')) {

@@ -4,21 +4,24 @@ function getAudiosArray() {
     var i = 0;
     return Array.prototype.forEach.call(elements, function (el) {
         if (!el.classList.contains('dowloaded')) {
-            renderDownloadButton(el.getAttribute('data-full-id'));
+            renderDownloadButton(el.getAttribute('data-audio'));
         }
     });
 }
 
 
-function renderDownloadButton(audioFullId) {
-    var url;
+function renderDownloadButton(audioData) {
     var el;
+    var audioFullId;
+    audioData = JSON.parse(audioData);
+    audioFullId = audioData[15]['content_id'];
+    var secretArr = audioData[13].split('/');
     el = document.getElementsByClassName('_audio_row_' + audioFullId)[0];
     if (!el.classList.contains('dowloaded')) {
         el.className += ' dowloaded';
         var element = el.getElementsByClassName('audio_row_content');
         var a = document.createElement('a');
-        a.setAttribute('onclick', 'getAudioFile("' + audioFullId + '")');
+        a.setAttribute('onclick', 'getAudioFile("' + audioFullId+"_"+secretArr[2]+"_"+secretArr[5] + '")');
         a.title = 'Скачать';
         a.setAttribute('class', 'vkDownloaderAudio');
         element[0].insertBefore(a, element[0].firstChild);

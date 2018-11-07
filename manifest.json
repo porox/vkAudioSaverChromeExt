@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Vk Audio Saver",
   "permissions": [ "<all_urls>", "*://*/*", "tabs", "activeTab" ],
-  "version": "1.5",
+  "version": "2.0.0",
   "content_scripts": [ {
     "css": ["css/vkAudioSave.css"],
     "js": ["background.js" ],
